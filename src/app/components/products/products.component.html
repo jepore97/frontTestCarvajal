@@ -1,0 +1,47 @@
+<ng-container  *ngIf="products.length !=0">
+    <div class="container" >
+        <div class="row">
+            <ng-container *ngFor="let item of filterProduct | filter:searchKey:'name'">
+                <div class="card col-md-3">
+                    <img src="{{item.image}}" alt="">
+                    <h5 style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100ch;">{{item.name}}</h5>
+                    <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100ch;">{{item.description}}</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>Cantidad: </p>
+                        </div>
+                        <div class="col-md-6">
+                            <input [(ngModel)]="item.cantidad" type="number"  [min]="1" [max]="item.stock" />
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Price:</strong> ${{item.price}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Stock:</strong> {{item.stock}}</p>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-secondary" (click)=addtocart(item)>Add to cart</button>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+
+</ng-container>
+
+
+<ng-container *ngIf="filterProduct.length ==0">
+    <div class="container">
+        <div class="card">
+            <h5 class="card-title">Mi carrito</h5>
+        </div>
+        <div class="center">
+            <img src="https://opendoormls.com/images/no-data.png" alt="">
+            <h4>Tu carrito esta vacio!</h4>
+        </div>
+    </div>
+</ng-container>
