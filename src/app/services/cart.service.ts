@@ -5,73 +5,92 @@ import { BehaviorSubject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from '../models/products.model';
 import { ProductsService } from './products.service';
+import { WishService } from './wish.service';
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
     public cartItemList : any =[]
-    public productList = new BehaviorSubject<any>([]);
+    public productList = new BehaviorSubject<any[]>([]);
   
-    constructor(private toastr: ToastrService,private productSvc:ProductsService) { }
+    constructor(private toastr: ToastrService,private productSvc:ProductsService,private wishSvc:WishService) { }
     getProducts(){
       return this.productList.asObservable();
     }
   
     setProduct(product : any){
       this.cartItemList.push(...product);
-      this.productList.next(product);
+      this.productList.next([...this.productList.getValue(),product]);
     }
 
     addtoCart(product : any){
+      this.cartItemList=this.productList.getValue()
       if(this.cartItemList.length>0){
        if( this.cartItemList.find((item:any)=>item.id==product.id)){
         this.toastr.warning('Producto ya existe en carrito');
        }else{
-        product.cantidad=1
-        product.total=product.price
-        this.cartItemList.push(product);
+        this.wishSvc.createWish(product,1).subscribe(res=>{
+        if(res){
+          this.productList.next([...this.productList.getValue(),product]);
+          this.toastr.success('Producto añadido a tu lista de deseos');
+          this.cartItemList.push(product);
+          
+        }else{
+          this.toastr.error('Ha ocurrido un error');
+        }
+        })
+        
       }
       
     }else{
-      product.cantidad=1
-      product.total=product.price
-      this.cartItemList.push(product);
+      this.wishSvc.createWish(product,1).subscribe(res=>{
+        if(res){
+          this.productList.next([...this.productList.getValue(),product]);
+          this.toastr.success('Producto añadido a tu lista de deseos');
+          this.cartItemList.push(product);
+          
+        }else{
+          this.toastr.error('Ha ocurrido un error');
+        }
+        })
     }
-      
-      this.productList.next(this.cartItemList);
       this.getTotalPrice();
     }
 
     getTotalPrice() : number{
       let grandTotal = 0;
       this.cartItemList.map((a:any)=>{
-        grandTotal += a.total;
+        grandTotal += a.price;
       })
       return grandTotal;
     }
     removeCartItem(product: any){
-      this.cartItemList.map((a:any, index:any)=>{
-        if(product.id=== a.id){
-          this.cartItemList.splice(index,1);
+      this.cartItemList=this.productList.getValue();
+      this.wishSvc.deleteWish(product.id,1).subscribe(res=>{
+        if(res){
+          this.cartItemList
+          this.toastr.success('Producto borrado de tu lista de deseos');
+          this.cartItemList.map((a:any, index:any)=>{
+            if(product.id===a.id){
+              this.cartItemList.splice(index,1);
+            }
+          })
+          this.productList.next(this.cartItemList);
         }
       })
-      this.productList.next(this.cartItemList);
+      
     }
     removeAllCart(){
-      this.cartItemList = []
-      this.productList.next(this.cartItemList);
+      this.wishSvc.emptyWish().subscribe(res=>{
+        if(res){
+          this.cartItemList = []
+          this.toastr.success('Lista borrada correctamente');
+          this.productList.next(this.cartItemList);
+          
+        }
+      })
+      return this.productList.getValue();
     }
 
-    saveCart(products:Product[]){
-      products.forEach(producto=>{
-        this.productSvc.getOneProduct(producto).subscribe((product:any)=>{
-          if(producto.cantidad&& producto.cantidad<=product.stock){
-  
-          }else{
-            this.toastr.warning(`el producto ${producto.name} cuenta con ${product.stock} unidades disponibles`);
-          }
-        })
-      })
-    }
 }

@@ -10,33 +10,39 @@
                             <th>Product Image</th>
                             <th>Description</th>
                             <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of products; let i = index">
-                            <td>{{i+1}}</td>
-                            <td style="width: 15%;">{{item.name}}</td>
+                        <tr *ngFor="let item of products; let i = index" [class.noexist]="item.stock<=0">
+                            <td >{{i+1}}</td>
+                            <td >{{item.name}}</td>
                             <td><img style="width: 100px;" src="{{item.image}}" alt=""></td>
-                            <td style="width: 25%;">{{item.description}}</td>
-                            <th style="width: 15%;">{{item.price}}</th>
-                            <td style="width: 15%;"><input [(ngModel)]="item.cantidad" type="number"  [min]="1" [max]="item.stock" /></td>
-                            <td style="width: 15%;">{{item.total}}</td>
+                            <td style=>{{item.description}}</td>
+                            <th style="width: 10%;">{{item.price}}</th>
+                
                             <td>
                                 <button (click)="removeItem(item)" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="4"></td>
-                            <td><button (click)="emptyCart()" class="btn btn-dark">Limpiar</button></td>
-                            <td><button routerLink="/products" class="btn btn-secondary">Comprar mas</button></td>
-                            <td><button (click)="saveCart()" class="btn btn-info">Guardar</button></td>
-                            <td style="width: 20%;"><strong>Total : ${{grandTotal}}</strong></td>
-                        </tr>
+                       
                     </tbody>
+                    
+                    
                 </table>
+               
+                
+            </div>
+            <div class="container">
+                <div class="row justify-content-end">
+                    <div class="col-md-6 d-flex align-self-end buttons">
+                        <button (click)="emptyCart()" class="btn btn-dark mr-2 mb-2">Limpiar</button>
+                        <button routerLink="/products" class="btn btn-secondary mr-2 mb-2">Comprar mas</button>
+                        <strong>Total : ${{grandTotal}}</strong>
+                    </div>
+                   
+                </div>
+
             </div>
         </div>
     </div>

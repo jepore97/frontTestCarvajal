@@ -12,8 +12,8 @@
 
     </div>
     <button routerLink="cart" class="btn btn-info">
-        <i style="font-size: 30px;" class="fas fa-cart-plus"></i>
-        <div style="font-size: 10px;" class="badge bg-danger">{{totalItem}}</div>
+        <i style="font-size: 30px;" class="fas fa-heart"></i>
+        <div style="font-size: 10px;" class="badge bg-danger"*ngIf="totalItem>0">{{totalItem}}</div>
     </button>
     </div>
   </nav>

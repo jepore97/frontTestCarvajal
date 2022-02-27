@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './components/shared/filter.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthComponent } from './components/auth/auth.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ToastrModule } from 'ngx-toastr';
     CartComponent,
     NavbarComponent,
     ProductsComponent,
-    FilterPipe
+    FilterPipe,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
