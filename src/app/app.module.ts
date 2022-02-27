@@ -12,6 +12,7 @@ import { FilterPipe } from './components/shared/filter.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthComponent } from './components/auth/auth.component';
+import { AuthGuard } from './services/auth/auth.guard';
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { AuthComponent } from './components/auth/auth.component';
     })
 
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

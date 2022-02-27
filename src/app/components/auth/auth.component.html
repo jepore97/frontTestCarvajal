@@ -1,1 +1,12 @@
-<p>auth works!</p>
+
+<body>
+  <div class="main">
+    <p class="sign" align="center">Bienvenido al reto Carvajal</p>
+    <form class="form1">
+      <input class="un " type="text" align="center"  [(ngModel)]="email" placeholder="Email">
+      <input class="pass" type="password" align="center" [(ngModel)]="password" placeholder="Password">
+      <a class="submit"   type="submit" (click)="Login()" align="center">Iniciar sesión</a>
+    </form>   
+    </div>
+     
+</body>

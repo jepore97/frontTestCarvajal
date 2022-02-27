@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
+<nav class="navbar navbar-expand-lg navbar-light bg-info" *ngIf="isLoggedIn">
     <div class="container">
       <div class="navbar-brand align-item-center d-flex">
         <i style="font-size: 40px;" class="fas fa-shipping-fast">&nbsp;
@@ -15,6 +15,11 @@
         <i style="font-size: 30px;" class="fas fa-heart"></i>
         <div style="font-size: 10px;" class="badge bg-danger"*ngIf="totalItem>0">{{totalItem}}</div>
     </button>
+    
+    <i style="font-size: 20px;" class="fas fa-user"></i><div>{{name}}</div>
+    
+    <button routerLink="login" type="submit" class="btn btn-info" (click)="logout()">Cerrar sesion</button>
+    
     </div>
   </nav>
 

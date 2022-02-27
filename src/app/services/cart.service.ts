@@ -23,14 +23,23 @@ export class CartService {
       this.cartItemList.push(...product);
       this.productList.next([...this.productList.getValue(),product]);
     }
-
+    loadWishes(){
+      this.wishSvc.getAllWish().subscribe((res:any)=>{
+        res.forEach((pro:any)=>{
+          if(pro&&pro.producto){
+            this.productList.next([...this.productList.getValue(),pro.producto])
+          }
+          
+        })
+      })
+    }
     addtoCart(product : any){
       this.cartItemList=this.productList.getValue()
       if(this.cartItemList.length>0){
        if( this.cartItemList.find((item:any)=>item.id==product.id)){
         this.toastr.warning('Producto ya existe en carrito');
        }else{
-        this.wishSvc.createWish(product,1).subscribe(res=>{
+        this.wishSvc.createWish(product,Number(localStorage.getItem('id_user'))).subscribe(res=>{
         if(res){
           this.productList.next([...this.productList.getValue(),product]);
           this.toastr.success('Producto añadido a tu lista de deseos');
@@ -67,7 +76,7 @@ export class CartService {
     }
     removeCartItem(product: any){
       this.cartItemList=this.productList.getValue();
-      this.wishSvc.deleteWish(product.id,1).subscribe(res=>{
+      this.wishSvc.deleteWish(product.id,Number(localStorage.getItem('id_user'))).subscribe(res=>{
         if(res){
           this.cartItemList
           this.toastr.success('Producto borrado de tu lista de deseos');

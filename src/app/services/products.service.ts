@@ -16,13 +16,5 @@ export class ProductsService {
   getOneProduct(producto:Product) {
     return this.http.get(`${environment.baseURL}/${this.controller}/${producto.id}`);
   }
-  getCartItems() {
-    return this.http.get(`${environment.baseURL}${this.controller}//cart`);
-  }
-  increaseQty(payload:any) {
-    return this.http.post(`${environment.baseURL}${this.controller}//cart`, payload);
-  }
-  emptyCart() {
-    return this.http.delete(`${environment.baseURL}${this.controller}/cart/empty-cart`);
-  }
+ 
 }

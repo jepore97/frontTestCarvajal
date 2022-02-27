@@ -10,7 +10,7 @@ export class WishService {
    controller='wish'
   constructor(private http: HttpClient) {}
   getAllWish() {
-    return this.http.get(`${environment.baseURL}/${this.controller}/1`);
+    return this.http.get(`${environment.baseURL}/${this.controller}/${localStorage.getItem('id_user')}`);
   }
   createWish(product:Product,user_id:Number) {
       const body={
@@ -19,9 +19,6 @@ export class WishService {
      }
     return this.http.post(`${environment.baseURL}/${this.controller}`,body);
   }
-//   getCartItems() {
-//     return this.http.get(`${environment.baseURL}${this.controller}//cart`);
-//   }
   deleteWish(product_id:number,user_id:number) {
     const wish={
       'product_id':product_id,
@@ -30,6 +27,6 @@ export class WishService {
     return this.http.post(`${environment.baseURL}/${this.controller}/deletewish`, wish);
   }
   emptyWish() {
-    return this.http.delete(`${environment.baseURL}/${this.controller}/1`);
+    return this.http.delete(`${environment.baseURL}/${this.controller}/${localStorage.getItem('id_user')}`);
   }
 }
