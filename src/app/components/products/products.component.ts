@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
+import { Product } from 'src/app/models/products.model';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 
@@ -9,21 +11,17 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-  products:any[]=[]
-  filterProduct:any[]=[]
+  products:Product[]=[]
+  filterProduct:Product[]=[]
   searchKey:string ="";
  
-  constructor(private productSvc:ProductsService,private cartSvc: CartService) { }
+  constructor(private productSvc:ProductsService,private cartSvc: CartService,private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.productSvc.getAllProducts().subscribe((data: any)=>{
       if(data.length>0){
-        data.forEach((pro:any) => {
-          pro.cantidad=1;
-        });
         this.products=data
         this.filterProduct=data
-        console.log('this.product: ', this.products);
       }
       this.productSvc.search.subscribe((val:any)=>{
         this.searchKey = val;

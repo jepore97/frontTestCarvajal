@@ -2,6 +2,7 @@ import { environment } from '../../environments/environment.prod';
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import {Product} from '../models/products.model'
 @Injectable({
   providedIn: 'root'
 })
@@ -12,8 +13,8 @@ export class ProductsService {
   getAllProducts() {
     return this.http.get(`${environment.baseURL}/${this.controller}`);
   }
-  addToCart(payload:any) {
-    return this.http.post(`${environment.baseURL}/${this.controller}/cart`, payload);
+  getOneProduct(producto:Product) {
+    return this.http.get(`${environment.baseURL}/${this.controller}/${producto.id}`);
   }
   getCartItems() {
     return this.http.get(`${environment.baseURL}${this.controller}//cart`);
