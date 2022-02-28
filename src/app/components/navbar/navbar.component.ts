@@ -25,8 +25,8 @@ export class NavbarComponent implements OnInit {
     });
     this.wishSvc.getAllWish().subscribe((res:any)=>{
       res.forEach((pro:any)=>{
-        if(pro&&pro.producto){
-          this.cartSvc.productList.next([...this.cartSvc.productList.getValue(),pro.producto])
+        if(pro&&pro.product){
+          this.cartSvc.productList.next([...this.cartSvc.productList.getValue(),pro.product])
         }
         
       })

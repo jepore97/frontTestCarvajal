@@ -25,9 +25,10 @@ export class CartService {
     }
     loadWishes(){
       this.wishSvc.getAllWish().subscribe((res:any)=>{
+        console.log('res: ', res);
         res.forEach((pro:any)=>{
-          if(pro&&pro.producto){
-            this.productList.next([...this.productList.getValue(),pro.producto])
+          if(pro&&pro.product){
+            this.productList.next([...this.productList.getValue(),pro.product])
           }
           
         })
